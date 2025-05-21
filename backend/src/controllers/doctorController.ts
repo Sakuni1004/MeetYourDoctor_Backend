@@ -1,49 +1,54 @@
+import { Request, Response } from 'express';
 import {
     createDoctorService,
     deleteDoctorsService,
     getAllDoctorsService,
-    updateManyDoctorsService
+    getDoctorByIdService,
+    updateDoctorsService
 } from "../services/doctorService";
 
-export const createDoctorController = async(req:any ,res:any)=> {
-    try{
-        const data = await createDoctorService(req.body);
-        res.send(data);
 
-    }
-    catch (e){
-        return res.status(400).send(e);
-    }
-};
-
-export const getAllDoctorsController = async (req:any, res:any) => {
+export const createDoctorController = async (req: Request, res: Response) => {
     try {
-        const { id} = req.query;
-
-        const data = await getAllDoctorsService(id );
-        res.send(data);
-    } catch (e) {
-        return res.status(400).send(e);
+        const doctor = await createDoctorService(req.body);
+        res.status(201).json({ message: 'Doctor registered successfully', doctor });
+    } catch (err: any) {
+        res.status(400).json({ error: err.message });
     }
 };
 
-export const updateDoctorsController = async (req:any, res:any) => {
+export const getAllDoctorsController = async (_req: Request, res: Response) => {
     try {
-        const data = req.body;
-        const result = await updateManyDoctorsService(data);
-        res.send(result);
-    } catch (e) {
-        return res.status(400).send(e);
+        const doctors = await getAllDoctorsService();
+        res.json(doctors);
+    } catch (err: any) {
+        res.status(500).json({ error: err.message });
     }
 };
 
-export const deleteDoctorsController = async (req:any, res:any) => {
+export const getDoctorByIdntroller = async (req: Request, res: Response) => {
     try {
-        const data = req.body;
-        const result = await deleteDoctorsService(data);
-        res.send(result);
-    } catch (e) {
-        return res.status(400).send(e);
+        const doctor = await getDoctorByIdService(req.params.id);
+        res.json(doctor);
+    } catch (err: any) {
+        res.status(404).json({ error: err.message });
     }
 };
 
+export const updateDoctorsController = async (req: Request, res: Response) => {
+    try {
+        const doctor = await updateDoctorsService(req.params.id, req.body);
+        res.json(doctor);
+    } catch (err: any) {
+        res.status(404).json({ error: err.message });
+    }
+};
+
+export const deleteDoctorsController = async (req: Request, res: Response) => {
+    try {
+        await deleteDoctorsService(req.params.id);
+        res.json({ message: 'Doctor deleted successfully' });
+    } catch (err: any) {
+        res.status(404).json({ error: err.message });
+    }
+};

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { register } from '../controllers/userController';
-import {createDoctorService} from "../services/doctorService";
+import {createDoctorService, getDoctorByIdService} from "../services/doctorService";
 import {
     createDoctorController, deleteDoctorsController,
     getAllDoctorsController,
@@ -11,9 +11,8 @@ export const doctorRouter = Router();
 
 doctorRouter.post('/create', createDoctorController);
 doctorRouter.get('/all', getAllDoctorsController);
-doctorRouter.put('/update', updateDoctorsController);
-doctorRouter.delete('/delete', deleteDoctorsController);
-
-
+doctorRouter.get('/:id', getDoctorByIdService);
+doctorRouter.put('/id', updateDoctorsController);
+doctorRouter.delete('/id', deleteDoctorsController);
 
 export default doctorRouter;
