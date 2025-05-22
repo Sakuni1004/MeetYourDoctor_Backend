@@ -1,26 +1,24 @@
 import { IDoctor } from '../models/doctor';
 import {
     createDoctorRepo,
-    getAllDoctors,
-    getDoctorById,
     updateDoctorRepo,
     deleteDoctorRepo,
-    findDoctorByEmail
+    findDoctorByEmailRepo, getDoctorByIdRepo, getAllDoctorsRepo
 } from '../dataAccessRepo/doctorRepo';
 
 export const createDoctorService = async (doctorData: Partial<IDoctor>) => {
-    const existing = await findDoctorByEmail(doctorData.email!);
+    const existing = await findDoctorByEmailRepo(doctorData.email!);
     if (existing) throw new Error('Email already in use');
 
     return await createDoctorRepo(doctorData);
 };
 
 export const getAllDoctorsService = async () => {
-    return await getAllDoctors();
+    return await getAllDoctorsRepo();
 };
 
 export const getDoctorByIdService = async (id: string) => {
-    const doctor = await getDoctorById(id);
+    const doctor = await getDoctorByIdRepo(id);
     if (!doctor) throw new Error('Doctor not found');
     return doctor;
 };

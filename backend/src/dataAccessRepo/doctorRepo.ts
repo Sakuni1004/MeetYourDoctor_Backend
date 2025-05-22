@@ -6,14 +6,14 @@ export const createDoctorRepo = async (data: Partial<IDoctor>): Promise<IDoctor>
     return doctor.save();
 };
 
-export const getAllDoctors = async (): Promise<IDoctor[]> => {
+export const getAllDoctorsRepo = async (): Promise<IDoctor[]> => {
     return Doctor.find();
 };
 
-export const getDoctorById = async (id: string): Promise<IDoctor | null> => {
+export const getDoctorByIdRepo = async (id: string): Promise<IDoctor | null> => {
     return Doctor.findById(id);
 };
-export const findDoctorByEmail = async (email: string): Promise<IDoctor | null> => {
+export const findDoctorByEmailRepo = async (email: string): Promise<IDoctor | null> => {
     return Doctor.findOne({ email });
 };
 

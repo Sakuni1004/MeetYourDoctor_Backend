@@ -26,7 +26,7 @@ export const getAllDoctorsController = async (_req: Request, res: Response) => {
     }
 };
 
-export const getDoctorByIdntroller = async (req: Request, res: Response) => {
+export const getDoctorByIdController = async (req: Request, res: Response) => {
     try {
         const doctor = await getDoctorByIdService(req.params.id);
         res.json(doctor);

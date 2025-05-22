@@ -26,6 +26,11 @@ const DoctorSchema: Schema = new Schema({
     feedback: {type: String},
     description: {type: String},
     doctorImage: {type: String},
+    availableDays: [{ type: Date }],
+    availableTime: {
+        start: { type: String},
+        end: { type: String },
+    },
 });
 
 export default mongoose.model<IDoctor>('Doctor', DoctorSchema);

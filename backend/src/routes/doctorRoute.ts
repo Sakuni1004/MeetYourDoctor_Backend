@@ -11,8 +11,8 @@ export const doctorRouter = Router();
 
 doctorRouter.post('/create', createDoctorController);
 doctorRouter.get('/all', getAllDoctorsController);
-doctorRouter.get('/:id', getDoctorByIdService);
-doctorRouter.put('/id', updateDoctorsController);
-doctorRouter.delete('/id', deleteDoctorsController);
+doctorRouter.get('/:id', getAllDoctorsController);
+doctorRouter.put('/:id', updateDoctorsController);
+doctorRouter.delete('/:id', deleteDoctorsController);
 
 export default doctorRouter;
