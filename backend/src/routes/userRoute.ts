@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { register } from '../controllers/userController';
+import { signupController} from '../controllers/userController';
 
-const router = Router();
+const userRoutes = Router();
 
-router.post('/signup', register);
+userRoutes.post('/register', signupController);
 
-export default router;
+export default userRoutes;

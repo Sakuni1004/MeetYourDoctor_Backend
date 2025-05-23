@@ -2,7 +2,7 @@ import { createUser, findUserByEmail } from '../dataAccessRepo/userRepo';
 import { IUser } from '../models/user';
 import bcrypt from 'bcryptjs';
 
-export const registerUser = async (userData: IUser) => {
+export const signupService = async (userData: IUser) => {
     const existing = await findUserByEmail(userData.email);
     if (existing) throw new Error('Email already in use');
 
