@@ -1,6 +1,4 @@
 import { Router } from 'express';
-import { register } from '../controllers/userController';
-import {createDoctorService, getDoctorByIdService} from "../services/doctorService";
 import {
     createDoctorController, deleteDoctorsController,
     getAllDoctorsController, getDoctorByIdController,
