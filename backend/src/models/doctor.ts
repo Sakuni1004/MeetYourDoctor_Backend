@@ -19,7 +19,7 @@ export interface IDoctor extends Document {
 
 const DoctorSchema: Schema = new Schema({
     firstName: {type: String, required: true},
-    lastname: {type: String},
+    lastname: {type: String, required: true},
     email: {type: String, required: true, unique: true},
     mobileNumber: {type: String, required: true},
     doctorCategory: {type: String, required: true},
