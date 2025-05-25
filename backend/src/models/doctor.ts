@@ -14,6 +14,7 @@ export interface IDoctor extends Document {
         start: string,
         end: string
     }
+    price: number;
 
 }
 
@@ -31,6 +32,7 @@ const DoctorSchema: Schema = new Schema({
         start: { type: String},
         end: { type: String },
     },
+    payment: { type: Number, required: true, default: 500 },
 });
 
 export default mongoose.model<IDoctor>('Doctor', DoctorSchema);
