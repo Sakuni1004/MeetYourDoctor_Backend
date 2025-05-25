@@ -1,8 +1,7 @@
 import mongoose, {Schema, Document} from 'mongoose';
 
 export interface IDoctor extends Document {
-    firstName: string;
-    lastname: string;
+    name: string;
     email: string;
     mobileNumber: string;
     doctorCategory: string;
@@ -18,8 +17,7 @@ export interface IDoctor extends Document {
 }
 
 const DoctorSchema: Schema = new Schema({
-    firstName: {type: String, required: true},
-    lastname: {type: String, required: true},
+    name: {type: String, required: true},
     email: {type: String, required: true, unique: true},
     mobileNumber: {type: String, required: true},
     doctorCategory: {type: String, required: true},
