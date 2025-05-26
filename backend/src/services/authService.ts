@@ -1,7 +1,7 @@
 import { IUser } from '../models/user';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import {createUserRepo, findUserByEmailRepo} from "../dataAccessRepo/authRepo";
+import {createUserRepo, findUserByEmailRepo, findUserByIdRepo} from "../dataAccessRepo/authRepo";
 
 export const signupUserService = async (userData: IUser) => {
     const existing = await findUserByEmailRepo(userData.email);
@@ -29,3 +29,19 @@ export const loginUserService = async (email: string, password: string) => {
     return { user, accessToken, refreshToken };
 };
 
+export const refreshTokenService = async (refreshToken: string) => {
+    try {
+        const payload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!) as { userId: string };
+
+        const user = await findUserByIdRepo(payload.userId);
+        if (!user) throw new Error('User not found');
+
+        const newAccessToken = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET!, {
+            expiresIn: '15m',
+        });
+
+        return newAccessToken;
+    } catch (err) {
+        throw new Error('Invalid or expired refresh token');
+    }
+};

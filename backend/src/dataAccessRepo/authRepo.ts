@@ -8,3 +8,7 @@ export const createUserRepo = async (userData: IUser) => {
 export const findUserByEmailRepo = async (email: string) => {
     return await User.findOne({ email });
 };
+
+export const findUserByIdRepo = async (id: string) => {
+    return await User.findById(id);
+};
