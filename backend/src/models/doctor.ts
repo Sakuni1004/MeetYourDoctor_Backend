@@ -1,5 +1,15 @@
 import mongoose, {Schema, Document} from 'mongoose';
 
+interface TimeSlot {
+    start: string;
+    end: string;
+}
+
+interface DateSlot {
+    date: Date;
+    timeSlots: TimeSlot[];
+}
+
 export interface IDoctor extends Document {
     name: string;
     email: string;
@@ -12,8 +22,9 @@ export interface IDoctor extends Document {
     availableTime: {
         start: string,
         end: string
-    }
-    price: number;
+    }[];
+    payment: number;
+    availableSlots: DateSlot[];
 
 }
 
@@ -26,11 +37,25 @@ const DoctorSchema: Schema = new Schema({
     description: {type: String},
     doctorImage: {type: String},
     availableDays: [{ type: Date }],
-    availableTime: {
-        start: { type: String},
-        end: { type: String },
-    },
+    availableTime: [
+        {
+            start: { type: String },
+            end: { type: String },
+        },
+    ],
     payment: { type: Number, required: true, default: 500 },
+    availableSlots: [
+        {
+            date: { type: Date, required: true },
+            timeSlots: [
+                {
+                    start: { type: String, required: true },
+                    end: { type: String, required: true },
+                },
+            ],
+        },
+    ],
 });
+
 
 export default mongoose.model<IDoctor>('Doctor', DoctorSchema);
