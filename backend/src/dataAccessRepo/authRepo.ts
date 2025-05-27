@@ -1,4 +1,5 @@
 import User, { IUser } from '../models/user';
+import {UpdateQuery} from "mongoose";
 
 export const createUserRepo = async (userData: IUser) => {
     const user = new User(userData);
@@ -11,4 +12,8 @@ export const findUserByEmailRepo = async (email: string) => {
 
 export const findUserByIdRepo = async (id: string) => {
     return await User.findById(id);
+};
+
+export const updateUserById = async (id: string, data: UpdateQuery<typeof User>) => {
+    return User.findByIdAndUpdate(id, data, { new: true });
 };

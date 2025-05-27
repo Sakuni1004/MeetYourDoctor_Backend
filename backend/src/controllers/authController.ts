@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import {signupUserService, loginUserService, refreshTokenService} from '../services/authService';
+import {signupUserService, loginUserService, refreshTokenService, updateUserService} from '../services/authService';
 
 export const signup = async (req: Request, res: Response) => {
     try {
@@ -35,5 +35,14 @@ export const refreshAccessToken = async (req: Request, res: Response) => {
         res.status(200).json({ accessToken });
     } catch (err: any) {
         res.status(403).json({ error: err.message });
+    }
+};
+
+export const updateUserByIdController = async (req: Request, res: Response) => {
+    try {
+        const updatedUser = await updateUserService(req.params.id, req.body);
+        res.json(updatedUser);
+    } catch (err: any) {
+        res.status(400).json({ message: err.message });
     }
 };

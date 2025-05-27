@@ -1,7 +1,7 @@
 import { IUser } from '../models/user';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import {createUserRepo, findUserByEmailRepo, findUserByIdRepo} from "../dataAccessRepo/authRepo";
+import {createUserRepo, findUserByEmailRepo, findUserByIdRepo, updateUserById} from "../dataAccessRepo/authRepo";
 
 export const signupUserService = async (userData: IUser) => {
     const existing = await findUserByEmailRepo(userData.email);
@@ -44,4 +44,10 @@ export const refreshTokenService = async (refreshToken: string) => {
     } catch (err) {
         throw new Error('Invalid or expired refresh token');
     }
+};
+
+export const updateUserService = async (id: string, data: any) => {
+    const updatedUser = await updateUserById(id, data);
+    if (!updatedUser) throw new Error('Update failed');
+    return updatedUser;
 };
