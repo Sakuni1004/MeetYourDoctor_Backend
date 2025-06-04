@@ -6,6 +6,7 @@ import {
     getDoctorByIdService,
     updateDoctorsService
 } from "../services/doctorService";
+import { doctorService } from '../services/doctorService';
 
 
 export const createDoctorController = async (req: Request, res: Response) => {
@@ -50,5 +51,24 @@ export const deleteDoctorsController = async (req: Request, res: Response) => {
         res.json({ message: 'Doctor deleted successfully' });
     } catch (err: any) {
         res.status(404).json({ error: err.message });
+    }
+};
+
+//get still available time slots
+export const doctorController = {
+    getAvailableTimeSlots: async (req: Request, res: Response) => {
+        try {
+            const { doctorId } = req.params;
+            const { date } = req.query;
+
+            if (!date || typeof date !== 'string') {
+                return res.status(400).json({ message: 'Date query param is required' });
+            }
+
+            const result = await doctorService.getAvailableSlots(doctorId, date);
+            res.json(result);
+        } catch (err: any) {
+            res.status(500).json({ message: err.message || 'Server error' });
+        }
     }
 };
