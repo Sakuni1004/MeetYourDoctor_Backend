@@ -11,6 +11,7 @@ interface DateSlot {
 }
 
 export interface IDoctor extends Document {
+    id: string;
     name: string;
     email: string;
     mobileNumber: string;
@@ -29,6 +30,7 @@ export interface IDoctor extends Document {
 }
 
 const DoctorSchema: Schema = new Schema({
+    id: {type: String, required: true},
     name: {type: String, required: true},
     email: {type: String, required: true, unique: true},
     mobileNumber: {type: String, required: true},
