@@ -25,3 +25,9 @@ export const updateDoctorRepo = async (id: string, data: Partial<IDoctor>): Prom
 export const deleteDoctorRepo = async (id: string): Promise<IDoctor | null> => {
     return Doctor.findByIdAndDelete(id);
 };
+
+export const doctorRepository = {
+    findById: (doctorId: string) => {
+        return Doctor.findById(doctorId).lean();
+    }
+};

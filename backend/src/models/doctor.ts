@@ -53,6 +53,7 @@ const DoctorSchema: Schema = new Schema({
                 {
                     start: { type: String, required: true },
                     end: { type: String, required: true },
+                    isBooked: { type: Boolean, default: false },
                 },
             ],
         },
