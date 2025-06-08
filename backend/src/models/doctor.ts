@@ -3,6 +3,7 @@ import mongoose, {Schema, Document} from 'mongoose';
 interface TimeSlot {
     start: string;
     end: string;
+    isBooked: boolean;
 }
 
 interface DateSlot {

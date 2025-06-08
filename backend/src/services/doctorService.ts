@@ -8,6 +8,7 @@ import {
 // services/doctor.service.ts
 import { doctorRepository } from '../dataAccessRepo/doctorRepo';
 import { appointmentRepository } from '../dataAccessRepo/appointmentRepo';
+import Appointment from "../models/appointment";
 
 export const createDoctorService = async (doctorData: Partial<IDoctor>) => {
     const existing = await findDoctorByEmailRepo(doctorData.email!);
@@ -54,7 +55,7 @@ export const doctorService = {
             return slotDate === date.toISOString();
         });
 
-        if (!daySlot) return { date: dateStr, timeSlots: [] };
+        if (!daySlot) return {date: dateStr, timeSlots: []};
 
         const availableTimeSlots = daySlot.timeSlots.filter(
             (slot: any) => !bookedTimes.includes(slot.start)
@@ -65,4 +66,31 @@ export const doctorService = {
             timeSlots: availableTimeSlots,
         };
     }
+}
+
+    //get booked time slots for doctor
+export const getBookedTimeSlots = async (doctorId: string, date: string) => {
+    const targetDate = new Date(date);
+    targetDate.setHours(0, 0, 0, 0);
+
+    const nextDay = new Date(targetDate);
+    nextDay.setDate(targetDate.getDate() + 1);
+
+    const appointments = await Appointment.find({
+        doctor: doctorId,
+        date: {
+            $gte: targetDate,
+            $lt: nextDay,
+        },
+        status: { $in: ['confirmed'] },
+    });
+
+    const bookedSlots = appointments.map(app => ({
+        start: app.startTime,
+        end: app.endTime,
+    }));
+
+    return bookedSlots;
 };
+
+
